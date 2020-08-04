@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel achat{% endblock %}
+
+{% block body %}
+    <h1>Nouvel achat</h1>
+
+    {{ include('achat/_form.html.twig') }}
+
+    <a href="{{ path('achat_index') }}">Retour à la liste</a>
+{% endblock %}

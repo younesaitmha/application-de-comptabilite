@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Achat index{% endblock %}
+
+{% block body %}
+    <h1>Achat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdAchat</th>
+                <th>Date d'achat</th>
+                <th>Total HT</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for achat in achats %}
+            <tr>
+                <td>{{ achat.idachat }}</td>
+                <td>{{ achat.dateAchat ? achat.dateAchat|date('Y-m-d') : '' }}</td>
+                <td>{{ achat.totalTtc }}</td>
+                <td>
+                    <a href="{{ path('achat_show', {'idachat': achat.idachat}) }}">Afficher</a>
+                    <a href="{{ path('achat_edit', {'idachat': achat.idachat}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('achat_new') }}">Ajouter un achat</a>
+{% endblock %}

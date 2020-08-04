@@ -1,0 +1,71 @@
+{% macro printLCPRow(lcp) %}
+	
+	{{ form_widget(lcp.idProduit)}}
+	{{ form_widget(lcp.qteVente)}}
+	
+		<a href="#" class="js-lcp-remove pull-right" style="color:red;padding-left:3%">
+			Supprimer
+		</a>
+	
+{% endmacro %}
+
+{{ form_start(form,{'enctype':'multipart/form-data'}) }}
+	{{ form_widget(form.datevente)}}
+	{{ form_widget(form.idclient)}}
+	</br>
+	{% import _self as formMacros %} 
+	<h2>Ajouter un produit</h2>
+	<button type="button" data-list="#lcp-field-list" class="add-another-collection-widget"> Ajouter un produit</button>
+	</br>
+	
+	<ul class="js-lcp-wrapper"	id="lcp-field-list"
+		data-prototype="{{ formMacros.printLCPRow(form.ventepdts.vars.prototype)|e('html_attr')  }}"
+		data-widget-tags="{{ '<li class=\'js-lcp-item\'></li>'|e }}"
+	>
+	</ul>
+
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+{% block javascript %}
+<!-- jQuery -->
+	<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script>	
+	
+	jQuery(document).ready(function () {
+			
+			var $wrapper = $('.js-lcp-wrapper');
+			
+			$wrapper.on('click', '.js-lcp-remove', function(e) {
+				e.preventDefault();
+				$(this).closest('.js-lcp-item')
+					.fadeOut()
+					.remove();
+				});
+			
+			jQuery('.add-another-collection-widget').click(function (e) {
+				
+				e.preventDefault();
+				var list = jQuery(jQuery(this).attr('data-list'));
+				// Try to find the counter of the list
+				var counter = list.data('widget-counter') | list.children().length;
+				// If the counter does not exist, use the length of the list
+				if (!counter) { counter = list.children().length; }
+				// grab the prototype template
+				var newWidget = list.attr('data-prototype');
+				// replace the "__name__" used in the id and name of the prototype
+				// with a number that's unique to your emails
+				// end name attribute looks like name="contact[emails][2]"
+				newWidget = newWidget.replace(/__name__/g, counter);
+				// Increase the counter
+				counter++;
+				// And store it, the length cannot be used if deleting widgets is allowed
+				list.data(' widget-counter', counter);
+
+				// create a new list element and add it to the list
+				var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+				newElem.appendTo(list);
+			});
+		});
+</script>
+{% endblock javascript %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fournisseur index{% endblock %}
+
+{% block body %}
+    <h1>Fournisseur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idfournisseur</th>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fournisseur in fournisseurs %}
+            <tr>
+                <td>{{ fournisseur.idfournisseur }}</td>
+                <td>{{ fournisseur.nom }}</td>
+                <td>{{ fournisseur.adresse }}</td>
+                <td>{{ fournisseur.email }}</td>
+                <td>{{ fournisseur.telephone }}</td>
+                <td>
+                    <a href="{{ path('fournisseur_show', {'idfournisseur': fournisseur.idfournisseur}) }}">Afficher</a>
+                    <a href="{{ path('fournisseur_edit', {'idfournisseur': fournisseur.idfournisseur}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('fournisseur_new') }}">Ajouter un fournisseur</a>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Achat{% endblock %}
+
+{% block body %}
+    <h1>Achat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdAchat</th>
+                <td>{{ achat.idachat }}</td>
+            </tr>
+            <tr>
+                <th>Date d'achat</th>
+                <td>{{ achat.dateAchat ? achat.dateAchat|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Total HT</th>
+                <td>{{ achat.totalTtc }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('achat_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('achat_edit', {'idachat': achat.idachat}) }}">Modifier</a>
+
+    {{ include('achat/_delete_form.html.twig') }}
+{% endblock %}

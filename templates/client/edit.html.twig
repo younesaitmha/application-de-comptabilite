@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification{% endblock %}
+
+{% block body %}
+    <h1>Client</h1>
+
+    {{ include('client/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('client_index') }}">Retour à la liste</a>
+
+    {{ include('client/_delete_form.html.twig') }}
+{% endblock %}
